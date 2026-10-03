@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undertale KR Font Preview</title>
+    <style>
+        :root {
+            --bg: #000;
+            --fg: #fff;
+            --fg-muted: #888;
+            --fg-dim: #ccc;
+            --accent-yellow: #ffeb3b;
+            --accent-blue: #58a6ff;
+            --border: 4px solid var(--fg);
+        }
+
+        @font-face { font-family: 'Galmuri9'; src: url('./assets/Galmuri9.ttf') format('truetype'); }
+        @font-face { font-family: 'Dialog_Waldo'; src: url('./assets/fonts/DeterminationMonoK2 (팀왈도).ttf') format('truetype'); }
+        @font-face { font-family: 'Dialog_108'; src: url('./assets/fonts/GyeoluiChe-TTF (1.08).ttf') format('truetype'); }
+        @font-face { font-family: 'Menu_Waldo'; src: url('./assets/fonts/DeterminationSansK2 (팀왈도).ttf') format('truetype'); }
+        @font-face { font-family: 'Menu_108'; src: url('./assets/fonts/Gyeolui-TTF (1.08).ttf') format('truetype'); }
+        @font-face { font-family: 'Papyrus_Waldo'; src: url('./assets/fonts/스루피파13 (팀 왈도).ttf') format('truetype'); }
+        @font-face { font-family: 'Papyrus_108'; src: url('./assets/fonts/스루피파16 (1.08).ttf') format('truetype'); }
+        @font-face { font-family: 'Sans_Common'; src: url('./assets/fonts/즈샌16 (공통).ttf') format('truetype'); }
+        @font-face { font-family: 'Bubble_Common'; src: url('./assets/fonts/언텔대사창16 (공통).ttf') format('truetype'); }
+
+        * { box-sizing: border-box; -webkit-font-smoothing: none; margin: 0; padding: 0; }
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: 'Galmuri9', sans-serif;
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        a { color: var(--accent-yellow); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .btn {
+            background: var(--bg);
+            color: var(--fg);
+            border: 2px solid var(--fg);
+            padding: 8px 16px;
+            font-family: inherit;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn:hover { background: var(--fg); color: var(--bg); text-decoration: none; }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .controls { display: flex; flex-direction: column; gap: 16px; }
+        .controls .btn.dl-all { font-size: 20px; padding: 16px; border-width: 4px; text-align: center; }
+        .toggle-group { display: flex; border: var(--border); padding: 4px; }
+        .toggle-btn {
+            flex: 1;
+            background: transparent;
+            color: var(--fg-muted);
+            border: none;
+            padding: 12px;
+            font-size: 18px;
+            cursor: pointer;
+            font-family: inherit;
+            position: relative;
+        }
+        .toggle-btn.active { color: var(--accent-yellow); }
+        .toggle-btn.active::before {
+            content: "";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            background: url('./assets/Undertale_red_soul.svg.png') center/contain no-repeat;
+        }
+
+        .dialog {
+            border: var(--border);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .dialog-header { display: flex; justify-content: space-between; align-items: flex-start; }
+        .meta-title { font-size: 20px; margin-bottom: 8px; }
+        .meta-info { font-size: 14px; color: var(--fg-muted); line-height: 1.5; }
+        .meta-info .font-name { color: var(--fg-dim); margin-right: 6px; }
+        .meta-info a { color: var(--accent-blue); }
+
+        .dialog-body { display: flex; gap: 24px; align-items: flex-start; }
+        .char-face { width: 110px; height: 110px; object-fit: contain; image-rendering: pixelated; flex-shrink: 0; }
+        
+        textarea {
+            flex: 1;
+            background: transparent;
+            color: var(--fg);
+            border: none;
+            outline: none;
+            resize: vertical;
+            min-height: 160px;
+            font-size: 30px;
+            line-height: 1.5;
+            padding-bottom: 10px;
+        }
+        textarea::-webkit-scrollbar { width: 0; }
+
+        .dialog-body.bubble-body { gap: 0; }
+        .dialog-body.bubble-body .char-face { margin-top: 50px; }
+        .bubble {
+            flex: 1;
+            min-width: 0;
+            min-height: 216px;
+            display: flex;
+            border-style: solid;
+            border-color: transparent;
+            border-width: 24px;
+            border-image-source: url('./assets/Bubble5.svg');
+            border-image-slice: 22.22% 24.24% fill;
+            border-image-width: 48px;
+            border-image-repeat: stretch;
+            image-rendering: pixelated;
+        }
+        .bubble textarea {
+            color: #000;
+            caret-color: #000;
+            min-height: 120px;
+            padding: 0 0 0 4px;
+            font-size: 30px;
+            line-height: 1.4;
+        }
+        .bubble textarea::selection { background: #000; color: #fff; }
+
+        .icon-info {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            border: 1px solid var(--fg-muted);
+            font-size: 10px;
+            cursor: help;
+            position: relative;
+        }
+        .icon-info:hover { color: var(--fg); border-color: var(--fg); }
+        .icon-info::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 150%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--fg);
+            color: var(--bg);
+            padding: 8px 12px;
+            border-radius: 2px;
+            font-size: 13px;
+            white-space: pre;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            z-index: 10;
+        }
+        .icon-info:hover::after { opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <audio id="sfx-select" src="./assets/undertale-select-sound.mp3" preload="auto"></audio>
+
+    <div class="container">
+        <div class="controls">
+            <a href="./assets/언더테일한국창작용폰트.zip" download class="btn dl-all">
+                [ 전체 폰트 다운로드 (.zip) ]
+            </a>
+            <div class="toggle-group">
+                <button class="toggle-btn active" onclick="setVersion('waldo', true)" id="btn-waldo">팀 왈도</button>
+                <button class="toggle-btn" onclick="setVersion('v108', true)" id="btn-108">1.08</button>
+            </div>
+        </div>
+
+        <main id="preview-grid" class="container">
+            
+            <article class="dialog">
+                <header class="dialog-header">
+                    <div>
+                        <h2 class="meta-title">메인 다이얼로그 (대사창)</h2>
+                        <div class="meta-info">
+                            <span class="font-name" id="name-dialog"></span>
+                            <span class="icon-info" id="info-dialog" data-tooltip="">i</span><br>
+                            출처: <a href="#" target="_blank" id="author-dialog"></a>
+                            <span id="extra-dialog"></span>
+                        </div>
+                    </div>
+                    <a href="#" download class="btn" id="dl-dialog">다운로드</a>
+                </header>
+                <div class="dialog-body">
+                    <textarea id="text-dialog" spellcheck="false">* 당신은 의지로 가득 찼다.&#13;&#10;* 나와 함께 가려는거야?</textarea>
+                </div>
+            </article>
+
+            <article class="dialog">
+                <header class="dialog-header">
+                    <div>
+                        <h2 class="meta-title">메인 다이얼로그 (메뉴)</h2>
+                        <div class="meta-info">
+                            <span class="font-name" id="name-menu"></span>
+                            <span class="icon-info" id="info-menu" data-tooltip="">i</span><br>
+                            출처: <a href="#" target="_blank" id="author-menu"></a>
+                            <span id="extra-menu"></span>
+                        </div>
+                    </div>
+                    <a href="#" download class="btn" id="dl-menu">다운로드</a>
+                </header>
+                <div class="dialog-body">
+                    <textarea id="text-menu" spellcheck="false">* 당신은 의지로 가득 찼다.</textarea>
+                </div>
+            </article>
+
+            <article class="dialog">
+                <header class="dialog-header">
+                    <div>
+                        <h2 class="meta-title">파피루스</h2>
+                        <div class="meta-info">
+                            <span class="font-name" id="name-papyrus"></span>
+                            <span class="icon-info" id="info-papyrus" data-tooltip="">i</span><br>
+                            제작: <a href="#" target="_blank" id="author-papyrus"></a>
+                        </div>
+                    </div>
+                    <a href="#" download class="btn" id="dl-papyrus">다운로드</a>
+                </header>
+                <div class="dialog-body">
+                    <img src="./assets/Papyrus_face.webp" alt="Papyrus" class="char-face">
+                    <textarea id="text-papyrus" spellcheck="false">녜-헤-헤! 넌 이제 파란색이야.&#13;&#10;나랏말미中國귁에달아&#13;&#10;文문字와로서르디아니</textarea>
+                </div>
+            </article>
+
+            <article class="dialog">
+                <header class="dialog-header">
+                    <div>
+                        <h2 class="meta-title">샌즈</h2>
+                        <div class="meta-info">
+                            <span class="font-name" id="name-sans"></span>
+                            <span class="icon-info" id="info-sans" data-tooltip="">i</span><br>
+                            제작: <a href="#" target="_blank" id="author-sans"></a>
+                        </div>
+                    </div>
+                    <a href="./assets/fonts/즈샌16 (공통).ttf" download class="btn">다운로드</a>
+                </header>
+                <div class="dialog-body">
+                    <img src="./assets/Sans_face.webp" alt="Sans" class="char-face">
+                    <textarea id="text-sans" spellcheck="false" style="font-family: 'Sans_Common'">* 난 샌즈야. 뼈다귀 샌즈.&#13;&#10;* 나랏말미中國귁에달아&#13;&#10;* 文문字와로서르디아니</textarea>
+                </div>
+            </article>
+
+            <article class="dialog">
+                <header class="dialog-header">
+                    <div>
+                        <h2 class="meta-title">대사창 (말풍선)</h2>
+                        <div class="meta-info">
+                            <span class="font-name" id="name-bubble"></span>
+                            <span class="icon-info" id="info-bubble" data-tooltip="">i</span><br>
+                            제작: <a href="#" target="_blank" id="author-bubble"></a>
+                        </div>
+                    </div>
+                    <a href="./assets/fonts/언텔대사창16 (공통).ttf" download class="btn">다운로드</a>
+                </header>
+                <div class="dialog-body bubble-body">
+                    <img src="./assets/Froggit_battle_idle.webp" alt="Sans" class="char-face">
+                    <div class="bubble">
+                        <textarea id="text-bubble" spellcheck="false" style="font-family: 'Bubble_Common'">지하 세계는 희망으로&#13;&#10;가득 차게 되었었지요.&#13;&#10;나랏말미中國귁에달아&#13;&#10;文문字와로서르디아니</textarea>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+    </div>
+
+    <script>
+        const TXT_OLD_KR = "완성형 11,172자 지원 · 한자 지원\n한양PUA(옛한글) 5,299자 지원\n기타 등등";
+        const fontData = {
+            dialog: {
+                waldo: { name: "DeterminationMonoK2 (팀왈도).ttf", css: "Dialog_Waldo", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=game_nintendo&no=1476022", extra: "(포맷 개조됨)", support: "표준 완성형 2,350자 지원", size: "36px" },
+                v108: { name: "GyeoluiChe-TTF (1.08).ttf", css: "Dialog_108", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=undeltarune&no=33114", extra: "", support: "완성형 11,172자 지원", size: "30px" }
+            },
+            menu: {
+                waldo: { name: "DeterminationSansK2 (팀왈도).ttf", css: "Menu_Waldo", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=game_nintendo&no=1476022", extra: "(포맷 개조됨)", support: "표준 완성형 2,350자 지원", size: "36px" },
+                v108: { name: "Gyeolui-TTF (1.08).ttf", css: "Menu_108", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=undeltarune&no=33114", extra: "", support: "완성형 11,172자 지원", size: "30px" }
+            },
+            papyrus: {
+                waldo: { name: "스루피파13 (팀 왈도).ttf", css: "Papyrus_Waldo", author: "진윤", link: "https://github.com/newhajinyoon/", extra: "", support: TXT_OLD_KR, size: "30px" },
+                v108: { name: "스루피파16 (1.08).ttf", css: "Papyrus_108", author: "진윤", link: "https://github.com/newhajinyoon/", extra: "", support: TXT_OLD_KR, size: "30px" }
+            },
+            sans: { name: "즈샌16 (공통).ttf", author: "진윤", link: "https://github.com/newhajinyoon/", support: TXT_OLD_KR, size: "30px" },
+            bubble: { name: "언텔대사창16 (공통).ttf", author: "진윤", link: "https://github.com/newhajinyoon/", support: TXT_OLD_KR, size: "30px" }
+        };
+
+        const updateNode = (id, data) => {
+            document.getElementById(`name-${id}`).textContent = data.name.replace(/\s*\([^)]*\)/g, '');
+            document.getElementById(`info-${id}`).dataset.tooltip = data.support;
+            document.getElementById(`text-${id}`).style.fontFamily = data.css;
+            document.getElementById(`text-${id}`).style.fontSize = data.size;
+            document.getElementById(`dl-${id}`).href = `./assets/fonts/${data.name}`;
+            
+            const elAuthor = document.getElementById(`author-${id}`);
+            elAuthor.textContent = data.author;
+            elAuthor.href = data.link;
+
+            const elExtra = document.getElementById(`extra-${id}`);
+            if (elExtra) elExtra.textContent = data.extra ? ` ${data.extra}` : "";
+        };
+
+        const sfx = document.getElementById('sfx-select');
+        window.setVersion = (version, playSound = false) => {
+            if (playSound) {
+                sfx.currentTime = 0; 
+                sfx.play().catch(() => {});
+            }
+
+            document.getElementById('btn-waldo').classList.toggle('active', version === 'waldo');
+            document.getElementById('btn-108').classList.toggle('active', version === 'v108');
+
+            ['dialog', 'menu', 'papyrus'].forEach(id => updateNode(id, fontData[id][version]));
+        };
+
+        ['sans', 'bubble'].forEach(id => {
+            const d = fontData[id];
+            document.getElementById(`name-${id}`).textContent = d.name.replace(/\s*\([^)]*\)/g, '');
+            document.getElementById(`info-${id}`).dataset.tooltip = d.support;
+            document.getElementById(`author-${id}`).textContent = d.author;
+            document.getElementById(`author-${id}`).href = d.link;
+            document.getElementById(`text-${id}`).style.fontSize = d.size;
+        });
+
+        setVersion('waldo', false);
+    </script>
+</body>
+</html>
