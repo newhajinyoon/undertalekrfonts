@@ -179,7 +179,7 @@
 
     <div class="container">
         <div class="controls">
-            <a href="./assets/언더테일한국창작용폰트.zip" download class="btn dl-all">
+            <a href="https://github.com/newhajinyoon/undertalekrfonts/releases/download/v1/default.zip" download class="btn dl-all">
                 [ 전체 폰트 다운로드 (.zip) ]
             </a>
             <div class="toggle-group">
@@ -254,7 +254,7 @@
                             제작: <a href="#" target="_blank" id="author-sans"></a>
                         </div>
                     </div>
-                    <a href="./assets/fonts/즈샌16 (공통).ttf" download class="btn">다운로드</a>
+                    <a href="#" download class="btn" id="dl-sans">다운로드</a>
                 </header>
                 <div class="dialog-body">
                     <img src="./assets/Sans_face.webp" alt="Sans" class="char-face">
@@ -272,7 +272,7 @@
                             제작: <a href="#" target="_blank" id="author-bubble"></a>
                         </div>
                     </div>
-                    <a href="./assets/fonts/언텔대사창16 (공통).ttf" download class="btn">다운로드</a>
+                    <a href="#" download class="btn" id="dl-bubble">다운로드</a>
                 </header>
                 <div class="dialog-body bubble-body">
                     <img src="./assets/Froggit_battle_idle.webp" alt="Sans" class="char-face">
@@ -286,22 +286,22 @@
     </div>
 
     <script>
-        const TXT_OLD_KR = "완성형 11,172자 지원 · 한자 지원\n한양PUA(옛한글) 5,299자 지원\n기타 등등";
+        const REL = "https://github.com/newhajinyoon/undertalekrfonts/releases/download/v1/"; const TXT_OLD_KR = "완성형 11,172자 지원 · 한자 지원\n한양PUA(옛한글) 5,299자 지원\n기타 등등";
         const fontData = {
             dialog: {
-                waldo: { name: "DeterminationMonoK2 (팀왈도).ttf", css: "Dialog_Waldo", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=game_nintendo&no=1476022", extra: "(포맷 개조됨)", support: "표준 완성형 2,350자 지원", size: "36px" },
-                v108: { name: "GyeoluiChe-TTF (1.08).ttf", css: "Dialog_108", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=undeltarune&no=33114", extra: "", support: "완성형 11,172자 지원", size: "30px" }
+                waldo: { name: "DeterminationMonoK2 (팀왈도).ttf", url: REL + "DeterminationMonoK2.ttf", css: "Dialog_Waldo", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=game_nintendo&no=1476022", extra: "(포맷 개조됨)", support: "표준 완성형 2,350자 지원", size: "36px" },
+                v108: { name: "GyeoluiChe-TTF (1.08).ttf", url: REL + "GyeoluiChe-TTF.1.08.ttf", css: "Dialog_108", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=undeltarune&no=33114", extra: "", support: "완성형 11,172자 지원", size: "30px" }
             },
             menu: {
-                waldo: { name: "DeterminationSansK2 (팀왈도).ttf", css: "Menu_Waldo", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=game_nintendo&no=1476022", extra: "(포맷 개조됨)", support: "표준 완성형 2,350자 지원", size: "36px" },
-                v108: { name: "Gyeolui-TTF (1.08).ttf", css: "Menu_108", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=undeltarune&no=33114", extra: "", support: "완성형 11,172자 지원", size: "30px" }
+                waldo: { name: "DeterminationSansK2 (팀왈도).ttf", url: REL + "DeterminationSansK2.ttf", css: "Menu_Waldo", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=game_nintendo&no=1476022", extra: "(포맷 개조됨)", support: "표준 완성형 2,350자 지원", size: "36px" },
+                v108: { name: "Gyeolui-TTF (1.08).ttf", url: REL + "Gyeolui-TTF.1.08.ttf", css: "Menu_108", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=undeltarune&no=33114", extra: "", support: "완성형 11,172자 지원", size: "30px" }
             },
             papyrus: {
-                waldo: { name: "스루피파13 (팀 왈도).ttf", css: "Papyrus_Waldo", author: "진윤", link: "https://github.com/newhajinyoon/", extra: "", support: TXT_OLD_KR, size: "30px" },
+                waldo: { name: "스루피파13 (팀 왈도).ttf", url: REL + "Papyruskr13-teamwaldo.ttf", css: "Papyrus_Waldo", author: "진윤", link: "https://github.com/newhajinyoon/", extra: "", support: TXT_OLD_KR, size: "30px" },
                 v108: { name: "스루피파16 (1.08).ttf", css: "Papyrus_108", author: "진윤", link: "https://github.com/newhajinyoon/", extra: "", support: TXT_OLD_KR, size: "30px" }
             },
-            sans: { name: "즈샌16 (공통).ttf", author: "진윤", link: "https://github.com/newhajinyoon/", support: TXT_OLD_KR, size: "30px" },
-            bubble: { name: "언텔대사창16 (공통).ttf", author: "진윤", link: "https://github.com/newhajinyoon/", support: TXT_OLD_KR, size: "30px" }
+            sans: { name: "즈샌16 (공통).ttf", url: REL + "Sanskr16.ttf", author: "진윤", link: "https://github.com/newhajinyoon/", support: TXT_OLD_KR, size: "30px" },
+            bubble: { name: "언텔대사창16 (공통).ttf", url: REL + "UTTextbublekr16.ttf", author: "진윤", link: "https://github.com/newhajinyoon/", support: TXT_OLD_KR, size: "30px" }
         };
 
         const updateNode = (id, data) => {
@@ -309,7 +309,7 @@
             document.getElementById(`info-${id}`).dataset.tooltip = data.support;
             document.getElementById(`text-${id}`).style.fontFamily = data.css;
             document.getElementById(`text-${id}`).style.fontSize = data.size;
-            document.getElementById(`dl-${id}`).href = `./assets/fonts/${data.name}`;
+            document.getElementById(`dl-${id}`).href = data.url;
             
             const elAuthor = document.getElementById(`author-${id}`);
             elAuthor.textContent = data.author;
@@ -339,9 +339,12 @@
             document.getElementById(`author-${id}`).textContent = d.author;
             document.getElementById(`author-${id}`).href = d.link;
             document.getElementById(`text-${id}`).style.fontSize = d.size;
+            document.getElementById(`dl-${id}`).href = d.url;
         });
 
         setVersion('waldo', false);
     </script>
+    <script data-goatcounter="https://newhajinyoon.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
