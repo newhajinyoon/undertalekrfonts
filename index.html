@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>언더테일 한글 폰트 총집합</title>
-    <meta name="description" content="언더테일 샌즈, 파피루스, 대사창 한글 패치 폰트(팀왈도, 1.08)를 웹에서 미리보기하고 무료로 다운로드할 수 있는 사이트입니다.">
+    <title>언더테일/델타룬 한글 폰트 총집합</title>
+    <meta name="description" content="언더테일과 델타룬 대사창 한글 패치 폰트(1.08, 팀왈도, 델타룬 등)를 웹에서 미리보기하고 무료로 다운로드할 수 있는 사이트입니다.">
     <style>
         :root {
             --bg: #000;
@@ -25,6 +25,8 @@
         @font-face { font-family: 'Papyrus_108'; src: url('./assets/fonts/스루피파16 (1.08).ttf') format('truetype'); }
         @font-face { font-family: 'Sans_Common'; src: url('./assets/fonts/즈샌16 (공통).ttf') format('truetype'); }
         @font-face { font-family: 'Bubble_Common'; src: url('./assets/fonts/언텔대사창16 (공통).ttf') format('truetype'); }
+        @font-face { font-family: 'Delta_Dotum'; src: url('https://cdn.jsdelivr.net/gh/eocnd1116/qhtjrFont@main/asset/font/DeltaDotumKR.ttf') format('truetype'); }
+        @font-face { font-family: 'Delta_Glass'; src: url('https://cdn.jsdelivr.net/gh/eocnd1116/qhtjrFont@main/asset/font/DeltaGlassKR.ttf') format('truetype'); }
 
         * { box-sizing: border-box; -webkit-font-smoothing: none; margin: 0; padding: 0; }
         body {
@@ -60,7 +62,6 @@
         }
 
         .controls { display: flex; flex-direction: column; gap: 16px; }
-        .controls .btn.dl-all { font-size: 20px; padding: 16px; border-width: 4px; text-align: center; }
         .toggle-group { display: flex; border: var(--border); padding: 4px; }
         .toggle-btn {
             flex: 1;
@@ -141,6 +142,51 @@
         }
         .bubble textarea::selection { background: #000; color: #fff; }
 
+        @keyframes bg-pan-diagonal {
+            0% { background-position: 0 0; }
+            100% { background-position: -400px 400px; }
+        }
+
+        .dialog-body.prophecy-body {
+            position: relative;
+            height: 330px;
+            display: block;
+        }
+        .prophecy-gif {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 450px;
+            object-fit: contain;
+            image-rendering: pixelated;
+            z-index: 1;
+            pointer-events: none;
+        }
+        #text-prophecy {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            min-height: unset;
+            height: 120px;
+            font-size: 32px;
+            resize: none;
+            
+            background-image: url('./assets/depth-text.png');
+            background-repeat: repeat;
+            background-size: 400px auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            animation: bg-pan-diagonal 8s linear infinite;
+            
+            caret-color: #fff;
+            z-index: 2;
+        }
+
         .icon-info {
             display: inline-flex;
             align-items: center;
@@ -177,10 +223,10 @@
     {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "언더테일 한글 폰트 총집합",
-    "description": "언더테일 샌즈, 파피루스, 대사창 한글 패치 폰트(팀왈도, 1.08)를 웹에서 미리보기하고 다운로드할 수 있는 사이트입니다.",
+    "name": "언더테일/델타룬 한글 폰트 총집합",
+    "description": "언더테일과 델타룬 대사창 한글 패치 폰트(1.08, 팀왈도, 델타룬 등)를 웹에서 미리보기하고 무료로 다운로드할 수 있는 사이트입니다.",
     "url": "https://newhajinyoon.github.io/undertalekrfonts/",
-    "keywords": "언더테일, undertale, 한글 폰트, 팀왈도, 샌즈 폰트, 파피루스 폰트, 언더테일 대사창",
+    "keywords": "언더테일, 델타룬, undertale, deltarune, 한글 폰트, 팀왈도, 샌즈 폰트, 파피루스 폰트, 언더테일 대사창",
     "author": {
         "@type": "Person",
         "name": "newhajinyoon"
@@ -195,18 +241,15 @@
 
     <div class="container">
         <div class="controls">
-            <a href="https://github.com/newhajinyoon/undertalekrfonts/releases/download/v1/default.zip" download class="btn dl-all">
-                [ 전체 폰트 다운로드 (.zip) ]
-            </a>
             <div class="toggle-group">
-                <button class="toggle-btn active" onclick="setVersion('waldo', true)" id="btn-waldo">팀 왈도</button>
-                <button class="toggle-btn" onclick="setVersion('v108', true)" id="btn-108">1.08</button>
+                <button class="toggle-btn active" onclick="setVersion('v108', true)" id="btn-108">1.08</button>
+                <button class="toggle-btn" onclick="setVersion('waldo', true)" id="btn-waldo">팀 왈도</button>
+                <button class="toggle-btn" onclick="setVersion('deltarune', true)" id="btn-deltarune">델타룬</button>
             </div>
         </div>
 
         <main id="preview-grid" class="container">
-            
-            <article class="dialog">
+            <article class="dialog" id="article-dialog">
                 <header class="dialog-header">
                     <div>
                         <h2 class="meta-title">메인 다이얼로그 (대사창)</h2>
@@ -220,11 +263,11 @@
                     <a href="#" download class="btn" id="dl-dialog">다운로드</a>
                 </header>
                 <div class="dialog-body">
-                    <textarea id="text-dialog" spellcheck="false">* 당신은 의지로 가득 찼다.&#13;&#10;* 나와 함께 가려는거야?</textarea>
+                    <textarea id="text-dialog" spellcheck="false"></textarea>
                 </div>
             </article>
 
-            <article class="dialog">
+            <article class="dialog" id="article-menu">
                 <header class="dialog-header">
                     <div>
                         <h2 class="meta-title">메인 다이얼로그 (메뉴)</h2>
@@ -242,7 +285,7 @@
                 </div>
             </article>
 
-            <article class="dialog">
+            <article class="dialog" id="article-papyrus">
                 <header class="dialog-header">
                     <div>
                         <h2 class="meta-title">파피루스</h2>
@@ -260,7 +303,7 @@
                 </div>
             </article>
 
-            <article class="dialog">
+            <article class="dialog" id="article-sans">
                 <header class="dialog-header">
                     <div>
                         <h2 class="meta-title">샌즈</h2>
@@ -278,7 +321,7 @@
                 </div>
             </article>
 
-            <article class="dialog">
+            <article class="dialog" id="article-bubble">
                 <header class="dialog-header">
                     <div>
                         <h2 class="meta-title">대사창 (말풍선)</h2>
@@ -298,26 +341,47 @@
                 </div>
             </article>
 
+            <article class="dialog" id="article-prophecy" style="display: none;">
+                <header class="dialog-header">
+                    <div>
+                        <h2 class="meta-title">예언</h2>
+                        <div class="meta-info">
+                            <span class="font-name" id="name-prophecy"></span>
+                            <span class="icon-info" id="info-prophecy" data-tooltip="">i</span><br>
+                            제작: <a href="#" target="_blank" id="author-prophecy"></a>
+                        </div>
+                    </div>
+                    <a href="#" download class="btn" id="dl-prophecy">다운로드</a>
+                </header>
+                <div class="dialog-body prophecy-body">
+                    <textarea id="text-prophecy" spellcheck="false" style="font-family: 'Delta_Glass'">꽃의 남자, 갇힌 자.</textarea>
+                    <img src="./assets/dp-gifexport.gif" alt="prophecy gif" class="prophecy-gif">
+                </div>
+            </article>
         </main>
     </div>
 
     <script>
-        const REL = "https://github.com/newhajinyoon/undertalekrfonts/releases/download/v1/"; const TXT_OLD_KR = "완성형 11,172자 지원 · 한자 지원\n한양PUA(옛한글) 5,299자 지원\n기타 등등";
+        const REL = "https://github.com/newhajinyoon/undertalekrfonts/releases/download/v1/"; 
+        const TXT_OLD_KR = "완성형 11,172자 지원 · 한자 지원\n한양PUA(옛한글) 5,299자 지원\n기타 등등";
+        
         const fontData = {
             dialog: {
-                waldo: { name: "DeterminationMonoK2 (팀왈도).ttf", url: REL + "DeterminationMonoK2.ttf", css: "Dialog_Waldo", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=game_nintendo&no=1476022", extra: "(포맷 개조됨)", support: "표준 완성형 2,350자 지원", size: "30px" },
-                v108: { name: "GyeoluiChe16.ttf", url: REL + "GyeoluiChe16.ttf", css: "Dialog_108", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=undeltarune&no=33114", extra: "(40px 버그 수정 개조됨)", support: "완성형 11,172자 지원", size: "30px" }
+                v108: { name: "GyeoluiChe16.ttf", url: REL + "GyeoluiChe16.ttf", css: "Dialog_108", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=undeltarune&no=33114", extra: "(40px 버그 수정 개조됨)", support: "완성형 11,172자 지원", size: "30px", defaultText: "* 당신은 의지로 가득 찼다.\n* 나와 함께 가려는거야?" },
+                waldo: { name: "DeterminationMonoK2 (팀왈도).ttf", url: REL + "DeterminationMonoK2.ttf", css: "Dialog_Waldo", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=game_nintendo&no=1476022", extra: "(포맷 개조됨)", support: "표준 완성형 2,350자 지원", size: "30px", defaultText: "* 당신은 의지로 가득 찼다.\n* 나와 함께 가려는거야?" },
+                deltarune: { name: "DeltaDotumKR.ttf", url: "https://eocnd1116.github.io/qhtjrFont/index.html/raw/main/asset/font/DeltaDotumKR.ttf", css: "Delta_Dotum", author: "qhtjr", link: "https://eocnd1116.github.io/qhtjrFont/index.html", extra: "", support: "완성형 11,172자\n한양PUA(옛한글) 5,299자", size: "40px", defaultText: "* 난 조용한 것들을 보면 화가 치밀어.\n* 나랏말미 귁에 달아" }
             },
             menu: {
-                waldo: { name: "DeterminationSansK2 (팀왈도).ttf", url: REL + "DeterminationSansK2.ttf", css: "Menu_Waldo", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=game_nintendo&no=1476022", extra: "(포맷 개조됨)", support: "표준 완성형 2,350자 지원", size: "30px" },
-                v108: { name: "Gyeolui16.ttf", url: REL + "Gyeolui16.ttf", css: "Menu_108", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=undeltarune&no=33114", extra: "(40px 버그 수정 개조됨)", support: "완성형 11,172자 지원", size: "30px" }
+                v108: { name: "Gyeolui16.ttf", url: REL + "Gyeolui16.ttf", css: "Menu_108", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=undeltarune&no=33114", extra: "(40px 버그 수정 개조됨)", support: "완성형 11,172자 지원", size: "30px" },
+                waldo: { name: "DeterminationSansK2 (팀왈도).ttf", url: REL + "DeterminationSansK2.ttf", css: "Menu_Waldo", author: "미니오", link: "https://gall.dcinside.com/mgallery/board/view/?id=game_nintendo&no=1476022", extra: "(포맷 개조됨)", support: "표준 완성형 2,350자 지원", size: "30px" }
             },
             papyrus: {
-                waldo: { name: "스루피파13 (팀 왈도).ttf", url: REL + "Papyruskr13-teamwaldo.ttf", css: "Papyrus_Waldo", author: "진윤", link: "https://github.com/newhajinyoon/", extra: "", support: TXT_OLD_KR, size: "30px" },
-                v108: { name: "스루피파16 (1.08).ttf", url: REL + "Papyruskr16-1.08.ttf", css: "Papyrus_108", author: "진윤", link: "https://github.com/newhajinyoon/", extra: "", support: TXT_OLD_KR, size: "30px" }
+                v108: { name: "스루피파16 (1.08).ttf", url: REL + "Papyruskr16-1.08.ttf", css: "Papyrus_108", author: "진윤", link: "https://github.com/newhajinyoon/", extra: "", support: TXT_OLD_KR, size: "30px" },
+                waldo: { name: "스루피파13 (팀 왈도).ttf", url: REL + "Papyruskr13-teamwaldo.ttf", css: "Papyrus_Waldo", author: "진윤", link: "https://github.com/newhajinyoon/", extra: "", support: TXT_OLD_KR, size: "30px" }
             },
             sans: { name: "즈샌16 (공통).ttf", url: REL + "Sanskr16.ttf", author: "진윤", link: "https://github.com/newhajinyoon/", support: TXT_OLD_KR, size: "30px" },
-            bubble: { name: "언텔대사창16 (공통).ttf", url: REL + "UTTextbublekr16.ttf", author: "진윤", link: "https://github.com/newhajinyoon/", support: TXT_OLD_KR, size: "30px" }
+            bubble: { name: "언텔대사창16 (공통).ttf", url: REL + "UTTextbublekr16.ttf", author: "진윤", link: "https://github.com/newhajinyoon/", support: TXT_OLD_KR, size: "30px" },
+            prophecy: { name: "DeltaGlassKR.ttf", url: "https://eocnd1116.github.io/qhtjrFont/index.html/raw/main/asset/font/DeltaGlassKR.ttf", css: "Delta_Glass", author: "qhtjr", link: "https://eocnd1116.github.io/qhtjrFont/index.html", support: "완성형 11,172자 지원\n(초성 제외)", size: "40px" }
         };
 
         const updateNode = (id, data) => {
@@ -336,19 +400,50 @@
         };
 
         const sfx = document.getElementById('sfx-select');
+        const articles = {
+            dialog: document.getElementById('article-dialog'),
+            menu: document.getElementById('article-menu'),
+            papyrus: document.getElementById('article-papyrus'),
+            sans: document.getElementById('article-sans'),
+            bubble: document.getElementById('article-bubble'),
+            prophecy: document.getElementById('article-prophecy')
+        };
+
         window.setVersion = (version, playSound = false) => {
             if (playSound) {
                 sfx.currentTime = 0; 
                 sfx.play().catch(() => {});
             }
 
-            document.getElementById('btn-waldo').classList.toggle('active', version === 'waldo');
             document.getElementById('btn-108').classList.toggle('active', version === 'v108');
+            document.getElementById('btn-waldo').classList.toggle('active', version === 'waldo');
+            document.getElementById('btn-deltarune').classList.toggle('active', version === 'deltarune');
 
-            ['dialog', 'menu', 'papyrus'].forEach(id => updateNode(id, fontData[id][version]));
+            if (version === 'deltarune') {
+                articles.menu.style.display = 'none';
+                articles.papyrus.style.display = 'none';
+                articles.sans.style.display = 'none';
+                articles.bubble.style.display = 'none';
+                articles.prophecy.style.display = 'flex';
+                
+                updateNode('dialog', fontData.dialog.deltarune);
+                document.getElementById('text-dialog').value = fontData.dialog.deltarune.defaultText;
+            } else {
+                articles.menu.style.display = 'flex';
+                articles.papyrus.style.display = 'flex';
+                articles.sans.style.display = 'flex';
+                articles.bubble.style.display = 'flex';
+                articles.prophecy.style.display = 'none';
+                
+                updateNode('dialog', fontData.dialog[version]);
+                document.getElementById('text-dialog').value = fontData.dialog[version].defaultText;
+                
+                updateNode('menu', fontData.menu[version]);
+                updateNode('papyrus', fontData.papyrus[version]);
+            }
         };
 
-        ['sans', 'bubble'].forEach(id => {
+        ['sans', 'bubble', 'prophecy'].forEach(id => {
             const d = fontData[id];
             document.getElementById(`name-${id}`).textContent = d.name.replace(/\s*\([^)]*\)/g, '');
             document.getElementById(`info-${id}`).dataset.tooltip = d.support;
@@ -358,9 +453,8 @@
             document.getElementById(`dl-${id}`).href = d.url;
         });
 
-        setVersion('waldo', false);
+        setVersion('v108', false);
     </script>
-    <script data-goatcounter="https://newhajinyoon.goatcounter.com/count"
-            async src="//gc.zgo.at/count.js"></script>
+    <script data-goatcounter="https://newhajinyoon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
