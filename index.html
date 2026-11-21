@@ -43,6 +43,7 @@
         @font-face { font-family: 'Delta_Dotum'; src: url('https://cdn.jsdelivr.net/gh/eocnd1116/qhtjrFont@main/asset/font/DeltaDotumKR.ttf') format('truetype'); }
         @font-face { font-family: 'Delta_Box'; src: url('./assets/fonts/델타룬대사창.ttf') format('truetype'); }
         @font-face { font-family: 'Delta_Glass'; src: url('https://cdn.jsdelivr.net/gh/eocnd1116/qhtjrFont@main/asset/font/DeltaGlassKR.ttf') format('truetype'); }
+        @font-face { font-family: 'Name_Common'; src: url('./assets/fonts/Undertalenamekr.ttf') format('truetype'); }
 
         * { box-sizing: border-box; -webkit-font-smoothing: none; margin: 0; padding: 0; }
         body {
@@ -243,6 +244,19 @@
         }
         .icon-info:hover::after { opacity: 1; }
 
+        #article-name { padding: 16px 24px; gap: 12px; }
+        #article-name .dialog-body { gap: 0; }
+        #text-name {
+            min-height: unset;
+            height: 56px;
+            resize: none;
+            white-space: pre;
+            text-align: center;
+            overflow: hidden;
+            line-height: 1.5;
+            padding-bottom: 0;
+        }
+
         @media (max-width: 650px) {
             body {
                 padding: 20px 12px;
@@ -305,6 +319,8 @@
                 background-size: 300px auto;
                 top: 20px;
             }
+            #article-name { padding: 12px 16px; }
+            #text-name { min-height: unset; height: 44px; font-size: 22px !important; }
             .icon-info::after {
                 left: 0;
                 transform: translateX(0);
@@ -472,6 +488,23 @@
                     <img src="./assets/dp-gifexport.gif" alt="prophecy gif" class="prophecy-gif">
                 </div>
             </article>
+
+            <article class="dialog" id="article-name">
+                <header class="dialog-header">
+                    <div>
+                        <h2 class="meta-title">이름</h2>
+                        <div class="meta-info">
+                            <span class="font-name" id="name-name"></span>
+                            <span class="icon-info" id="info-name" data-tooltip="">i</span><br>
+                            제작: <a href="#" target="_blank" id="author-name"></a>
+                        </div>
+                    </div>
+                    <a href="#" download class="btn" id="dl-name">다운로드</a>
+                </header>
+                <div class="dialog-body">
+                    <textarea id="text-name" spellcheck="false" rows="1" style="font-family: 'Name_Common'">차라            LV 1</textarea>
+                </div>
+            </article>
         </main>
 
         <footer style="margin-top: 40px; text-align: center; color: var(--fg-muted); font-size: 14px; line-height: 1.8;">
@@ -502,6 +535,7 @@
             sans: { name: "즈샌16 (공통).ttf", url: REL + "Sanskr16.ttf", author: "진윤", link: "https://github.com/newhajinyoon/", support: TXT_OLD_KR, size: "30px" },
             bubble: { name: "언텔대사창16 (공통).ttf", url: REL + "UTTextbublekr16.ttf", author: "진윤", link: "https://github.com/newhajinyoon/", support: TXT_OLD_KR, size: "30px" },
             deltabox: { name: "델타룬대사창.ttf", url: "./assets/fonts/델타룬대사창.ttf", author: "진윤", link: "https://github.com/newhajinyoon/", support: "완성형 2,350자 지원", size: "24px" },
+            name: { name: "Undertalenamekr.ttf", url: "./assets/fonts/Undertalenamekr.ttf", author: "진윤", link: "https://github.com/newhajinyoon/", support: "완성형 11,172자 지원\n갈무리 11 볼드 + Mars Needs Cunnilingus 폰트", size: "30px" },
             prophecy: { name: "DeltaGlassKR.ttf", url: "https://github.com/eocnd1116/qhtjrFont/raw/main/asset/font/DeltaGlassKR.ttf", css: "Delta_Glass", author: "qhtjr", link: "https://github.com/eocnd1116/qhtjrFont", support: "완성형 11,172자 지원\n(초성 제외)", size: "50px" }
         };
 
@@ -528,7 +562,8 @@
             sans: document.getElementById('article-sans'),
             bubble: document.getElementById('article-bubble'),
             deltabox: document.getElementById('article-deltabox'),
-            prophecy: document.getElementById('article-prophecy')
+            prophecy: document.getElementById('article-prophecy'),
+            name: document.getElementById('article-name')
         };
 
         window.setVersion = (version, playSound = false) => {
@@ -548,6 +583,7 @@
                 articles.bubble.style.display = 'none';
                 articles.deltabox.style.display = 'flex';
                 articles.prophecy.style.display = 'flex';
+                articles.name.style.display = 'none';
                 
                 updateNode('dialog', fontData.dialog.deltarune);
                 document.getElementById('text-dialog').value = fontData.dialog.deltarune.defaultText;
@@ -558,6 +594,7 @@
                 articles.bubble.style.display = 'flex';
                 articles.deltabox.style.display = 'none';
                 articles.prophecy.style.display = 'none';
+                articles.name.style.display = (version === 'v108') ? 'flex' : 'none';
                 
                 updateNode('dialog', fontData.dialog[version]);
                 document.getElementById('text-dialog').value = fontData.dialog[version].defaultText;
@@ -567,12 +604,13 @@
             }
         };
 
-        ['sans', 'bubble', 'deltabox', 'prophecy'].forEach(id => {
+        ['sans', 'bubble', 'deltabox', 'prophecy', 'name'].forEach(id => {
             const d = fontData[id];
             document.getElementById(`name-${id}`).textContent = d.name.replace(/\s*\([^)]*\)/g, '');
-            document.getElementById(`info-${id}`).dataset.tooltip = d.support;
-            document.getElementById(`author-${id}`).textContent = d.author;
-            document.getElementById(`author-${id}`).href = d.link;
+            const infoEl = document.getElementById(`info-${id}`);
+            if (infoEl) infoEl.dataset.tooltip = d.support;
+            const authorEl = document.getElementById(`author-${id}`);
+            if (authorEl) { authorEl.textContent = d.author; authorEl.href = d.link; }
             document.getElementById(`text-${id}`).style.fontSize = d.size;
             document.getElementById(`dl-${id}`).href = d.url;
         });
